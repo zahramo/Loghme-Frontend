@@ -1,0 +1,42 @@
+stages:
+    - build
+    - deploy
+    
+docker-build:
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER_LOGHME" -p "$CI_REGISTRY_PASSWORD_LOGHME" $CI_REGISTRY_LOGHME
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE_LOGHME":frontend .
+    - docker push "$CI_REGISTRY_IMAGE_LOGHME":frontend
+  only:
+    - master
+
+deploy:
+  image: ubuntu:latest
+  stage: deploy
+
+  before_script:
+    - apt-get update
+    - apt-get install -y openconnect
+    - apt-get install -y wget
+    - apt-get install -y curl
+    - apt-get install -y lsof
+    - cd /tmp && wget https://files.ovpn.com/ubuntu_cli/ovpn-se-gothenburg.zip && unzip ovpn-se-gothenburg.zip && mkdir -p /etc/openvpn && mv config/* /etc/openvpn && chmod +x /etc/openvpn/update-resolv-conf && rm -rf config && rm -f ovpn-se-gothenburg.zip
+    - echo 862575 | openconnect s31.speedserver.info:555 --servercert pin-sha256:4A/UEvh3ko2FliYZcZK2fI04tMHOYk+uSFWIPJkvTIY= -u 6m862575 --passwd-on-stdin --background
+    - curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+    - chmod +x ./kubectl
+    - mv ./kubectl /usr/local/bin/kubectl
+    - mkdir ~/.kube
+    - echo "$config" > ~/.kube/config
+    
+  script:
+    - kubectl config view
+    - kubectl get service
+    - kubectl rollout restart deployment loghme-front-end
+    
+  only:
+    - master

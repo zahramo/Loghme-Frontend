@@ -1,0 +1,93 @@
+@import "../tools/footer.css";
+*{
+    font-family: Vazir;
+}
+
+html{
+    height: 100%;
+}
+
+
+
+.pink-bar{
+    background-color:#FF6B6B;
+    height: 210px;
+    position:relative;
+}
+
+.logo{
+    height: 180px;
+    width: 180px;
+    top: 50%;
+    position: relative;
+}
+
+
+.body-default{
+    background: #F7FFF7;
+    position: relative;
+    height: 100%;
+    min-height: calc(100vh - 77px);
+}
+
+.signup-box{
+    background: white;
+    text-align: center;
+    margin-top: 150px;
+    box-shadow: 0px 0px 5px grey;
+    border-radius: 10px 10px 10px;
+    padding-bottom: 5%;
+    margin-bottom: 270px;
+}
+
+.signup-bar{
+    background-color:#FF6B6B;
+    color: white;
+    box-shadow: 0px 0px 5px rgb(179, 179, 179);
+    border-color: rgb(143, 142, 142);
+    border-radius: 5px;
+    left:17%;
+    width: 50%;
+    height: 15%;
+    top:-7.5%;
+    left: 28%;
+    position: relative;
+    text-align: center; 
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.bar-title{
+    margin-top: 8px;
+}
+
+.signup-field{
+    margin-bottom: 7%;
+    position: relative;
+    background-color: rgb(228, 228, 228);
+    border: 0.5px solid rgb(150, 150, 150);
+    border-radius: 5px;
+    text-align: right;
+    padding-right: 5px;
+    height: 70%;
+    width: 70%;
+}
+
+.Toastify__toast--default {
+    background: #FFE66D;
+    color: #19535C;
+    text-align: right;
+    font-size: 14px;
+}
+
+.submit-button{
+    margin-top: 5%;
+    background-color: #4DCDC4;
+    border:#19535C ;
+    color: white;
+    border-radius: 5px;
+    width: 90%;
+    height: 100%;
+    font-weight: 500;
+    font-size: 18px;
+}

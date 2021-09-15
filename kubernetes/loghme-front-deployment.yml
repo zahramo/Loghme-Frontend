@@ -1,0 +1,43 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: loghme-front-end
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loghme-front-end
+  template:
+    metadata:
+      labels:
+        app: loghme-front-end
+    spec:
+      containers:
+        - name: loghme-front-end
+          image: index.docker.io/zahramo99/loghme:frontend
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          resources:
+              limits:
+                memory: "250Mi"
+                cpu: "250m"
+              requests:
+                memory: "250Mi"
+                cpu: "250m"
+      restartPolicy: Always
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: loghme-front-end
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      nodePort: 32001
+  selector:
+      app: loghme-front-end
